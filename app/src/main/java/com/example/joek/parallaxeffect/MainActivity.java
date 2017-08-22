@@ -25,14 +25,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        layerLvl1 = new ScrollableImageView(this, 20);
+        layerLvl1 = new ScrollableImageView(this, 60);
         layerLvl1.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, layerLvl1.getHeight()));
 
         layerLvl2 = new ScrollableImageView(this, 20);
         layerLvl2.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, layerLvl2.getHeight()));
 
-        new BitmapLoaderTask().execute("asset_one.jpg", "asset_two.png");
-//        new BitmapLoaderTask().execute("asset_two.png");
+//        new BitmapLoaderTask().execute("asset_one.jpg", "asset_two.png");
+        new BitmapLoaderTask().execute("asset_two.png");
 
     }
 
@@ -41,9 +41,8 @@ public class MainActivity extends AppCompatActivity {
         if (layerLvl1 != null) {
             switch (event.getAction()){
                 case MotionEvent.ACTION_MOVE:
-                    layerLvl1.dispatchTouchEvent(event);
-                    layerLvl2.dispatchTouchEvent(event);
-
+//                    layerLvl1.dispatchTouchEvent(event);
+//                    layerLvl2.dispatchTouchEvent(event);
                     break;
             }
         }
@@ -51,10 +50,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
-    private void setImageBitmap(Bitmap bmp, ImageView iv) {
-        iv.setImageBitmap(bmp);
+    private void setImageBitmap(Bitmap bmp) {
+        ImageView imageView = new ScrollableImageView(this, 10);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(bmp.getWidth(), bmp.getHeight()));
+        imageView.setImageBitmap(bmp);
         ViewGroup container = (ViewGroup) findViewById(R.id.container);
-        container.addView(iv);
+        container.addView(imageView);
     }
 
     private class BitmapLoaderTask extends AsyncTask<String, Void, Bitmap[]> {
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Bitmap[] doInBackground(String... params) {
             AssetManager assets = getAssets();
-            Bitmap[] bmp = new Bitmap[2];
+            Bitmap[] bmp = new Bitmap[1];
 
             try {
                 int i = 0;
@@ -91,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(result);
             progress.setVisibility(View.INVISIBLE);
 
-            setImageBitmap(result[0], layerLvl1);
-            setImageBitmap(result[1], layerLvl2);
+            setImageBitmap(result[0]);
+//            setImageBitmap(result[1], layerLvl2);
         }
 
     }

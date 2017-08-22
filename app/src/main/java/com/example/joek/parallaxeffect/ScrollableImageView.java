@@ -3,6 +3,7 @@ package com.example.joek.parallaxeffect;
 import android.content.Context;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewCompat;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -20,8 +21,7 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
     private int positionX = 0;
     private int positionY = 0;
 
-    private int percent = 100;
-    public int setPercent;
+    private int percent;
 
     public ScrollableImageView(Context context, int percent) {
         super(context);
@@ -39,8 +39,6 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        Log.i("CurrentY1", String.format(Locale.US, "%f", event.getY()));
-//        event.getY();
         gestureDetector.onTouchEvent(event);
         return true;
     }

@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.example.joek.parallaxeffect.ScrollableImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        custom:setPercentVelocity="80"/>
+    <!--<com.example.joek.parallaxeffect.ScrollableImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--custom:setPercentVelocity="80"-->
+        <!--android:src="@drawable/asset_one"/>-->
 
     <ImageView
         android:id="@+id/layerLevelOne"
