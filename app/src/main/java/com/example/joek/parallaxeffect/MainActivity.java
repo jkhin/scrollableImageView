@@ -6,13 +6,13 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import java.io.IOException;
@@ -25,25 +25,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        layerLvl1 = new ScrollableImageView(this, 20);
-        layerLvl1.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, layerLvl1.getHeight()));
 
-        layerLvl2 = new ScrollableImageView(this, 20);
-        layerLvl2.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, layerLvl2.getHeight()));
-
+        layerLvl1 = (ImageView) findViewById(R.id.layerLevelOne);
+        layerLvl2 = (ImageView) findViewById(R.id.layerLevelTwo);
         new BitmapLoaderTask().execute("asset_one.jpg", "asset_two.png");
-//        new BitmapLoaderTask().execute("asset_two.png");
 
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (layerLvl1 != null) {
+        if (layerLvl1 != null && layerLvl2 != null) {
             switch (event.getAction()){
                 case MotionEvent.ACTION_MOVE:
+//                    layerLvl1.dispatchGenericMotionEvent()
                     layerLvl1.dispatchTouchEvent(event);
                     layerLvl2.dispatchTouchEvent(event);
-
                     break;
             }
         }
@@ -53,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setImageBitmap(Bitmap bmp, ImageView iv) {
         iv.setImageBitmap(bmp);
-        ViewGroup container = (ViewGroup) findViewById(R.id.container);
-        container.addView(iv);
+        iv.setLayoutParams(new FrameLayout.LayoutParams(bmp.getWidth(), bmp.getHeight()));
     }
 
     private class BitmapLoaderTask extends AsyncTask<String, Void, Bitmap[]> {
