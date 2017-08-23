@@ -5,23 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--<com.example.joek.parallaxeffect.ScrollableImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--custom:setPercentVelocity="80"-->
-        <!--android:src="@drawable/asset_one"/>-->
-
-    <ImageView
+    <com.example.joek.parallaxeffect.ScrollableImageView
         android:id="@+id/layerLevelOne"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/asset_one"/>
-    <ImageView
+        android:layout_height="match_parent"
+        android:src="@drawable/asset_one"
+        custom:setPercentVelocity="10"/>
+
+    <com.example.joek.parallaxeffect.ScrollableImageView
         android:id="@+id/layerLevelTwo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/asset_two"/>
-
+        android:layout_height="match_parent"
+        android:src="@drawable/asset_one"
+        custom:setPercentVelocity="50"/>
 
     <ProgressBar
         android:id="@android:id/progress"

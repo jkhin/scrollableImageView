@@ -21,10 +21,14 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
     private int positionX = 0;
     private int positionY = 0;
 
-    private int percent;
+    private String percentValue;
+    public int percent;
 
-    public ScrollableImageView(Context context, int percent) {
-        super(context);
+
+    public ScrollableImageView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(attrs);
+        this.percent = Integer.parseInt(percentValue);
 
         // We will need screen dimensions to make sure we don't overscroll the
         // image
@@ -32,13 +36,21 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
         screenW = dm.widthPixels;
         screenH = dm.heightPixels;
 
-        this.percent = percent;
         gestureDetector = new GestureDetectorCompat(context, gestureListener);
         overScroller = new OverScroller(context);
     }
 
+    private void init(final AttributeSet attrs) {
+        if (attrs != null) {
+            String packageName = "http://schemas.android.com/apk/res-auto";
+            percentValue = attrs.getAttributeValue(packageName, "setPercentVelocity");
+        }
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+//        Log.i("CurrentY1", String.format(Locale.US, "%f", event.getY()));
+//        event.getY();
         gestureDetector.onTouchEvent(event);
         return true;
     }

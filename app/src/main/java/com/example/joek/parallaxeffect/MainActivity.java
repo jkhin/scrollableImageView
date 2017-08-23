@@ -6,16 +6,19 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+    ImageView layerLvl1, layerLvl2;
     private static final String DEBUG_TAG = "Training";
 
     @Override
@@ -23,15 +26,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new BitmapLoaderTask().execute("asset_two.png");
+        layerLvl1 = (ImageView) findViewById(R.id.layerLevelOne);
+        layerLvl2 = (ImageView) findViewById(R.id.layerLevelTwo);
+        new BitmapLoaderTask().execute("asset_one.jpg", "asset_two.png");
+
     }
 
-    private void setImageBitmap(Bitmap bmp, int vel) {
-        ImageView imageView = new ScrollableImageView(this, vel);
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(bmp.getWidth(), bmp.getHeight()));
-        imageView.setImageBitmap(bmp);
-        ViewGroup container = (ViewGroup) findViewById(R.id.container);
-        container.addView(imageView);
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (layerLvl1 != null && layerLvl2 != null) {
+            switch (event.getAction()){
+                case MotionEvent.ACTION_MOVE:
+//                    layerLvl1.dispatchGenericMotionEvent()
+                    layerLvl1.dispatchTouchEvent(event);
+                    layerLvl2.dispatchTouchEvent(event);
+                    break;
+            }
+        }
+
+        return super.onTouchEvent(event);
+    }
+
+    private void setImageBitmap(Bitmap bmp, ImageView iv) {
+        iv.setImageBitmap(bmp);
+        iv.setLayoutParams(new FrameLayout.LayoutParams(bmp.getWidth(), bmp.getHeight()));
     }
 
     private class BitmapLoaderTask extends AsyncTask<String, Void, Bitmap[]> {
@@ -47,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Bitmap[] doInBackground(String... params) {
             AssetManager assets = getAssets();
-            Bitmap[] bmp = new Bitmap[1];
+            Bitmap[] bmp = new Bitmap[2];
 
             try {
                 int i = 0;
@@ -68,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(result);
             progress.setVisibility(View.INVISIBLE);
 
-            setImageBitmap(result[0], 20);
+            setImageBitmap(result[0], layerLvl1);
+            setImageBitmap(result[1], layerLvl2);
         }
 
     }
