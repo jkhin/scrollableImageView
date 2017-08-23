@@ -3,26 +3,35 @@ package com.example.joek.parallaxeffect;
 import android.content.Context;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewCompat;
+
+import android.support.v7.widget.AppCompatImageView;
+
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
+import android.widget.ImageView;
 import android.widget.OverScroller;
 
+import java.util.ArrayList;
+import java.util.Locale;
 
-public class ScrollableImageView extends android.support.v7.widget.AppCompatImageView {
 
-    private GestureDetectorCompat gestureDetector;
+public class ScrollableImageView extends AppCompatImageView {
+
+    private GestureDetectorCompat gestureDetectorCompat;
     private OverScroller overScroller;
 
-    private final int screenW;
-    private final int screenH;
+    private final int screenWitdh;
+    private final int screenHeight;
 
     private int positionX = 0;
-    private int positionY = 0;
+    public int positionY = 0;
 
     private String percentValue;
     public int percent;
+    private boolean isParent;
 
 
     public ScrollableImageView(Context context, AttributeSet attrs) {
@@ -32,11 +41,11 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
 
         // We will need screen dimensions to make sure we don't overscroll the
         // image
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        screenW = dm.widthPixels;
-        screenH = dm.heightPixels;
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        screenWitdh = displayMetrics.widthPixels;
+        screenHeight = displayMetrics.heightPixels;
 
-        gestureDetector = new GestureDetectorCompat(context, gestureListener);
+        gestureDetectorCompat = new GestureDetectorCompat(context, gestureListener);
         overScroller = new OverScroller(context);
     }
 
@@ -49,12 +58,12 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        Log.i("CurrentY1", String.format(Locale.US, "%f", event.getY()));
-//        event.getY();
-        gestureDetector.onTouchEvent(event);
-        return true;
+        gestureDetectorCompat.onTouchEvent(event);
+        return false;
     }
-
+    public void setPositionY(float y){
+        this.positionY = (int) y;
+    }
     @Override
     public void computeScroll() {
         super.computeScroll();
@@ -70,12 +79,28 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
         }
     }
 
+    public void thisLayerIsParent(boolean isParent){
+        this.isParent = isParent;
+    }
+
+    public boolean isThisLayerParent(){
+        return this.isParent;
+    }
+
+    public void setChildren(MotionEvent event, ArrayList<ImageView> imageViewArrayList){
+        for (ImageView iv :
+                imageViewArrayList) {
+            iv.dispatchTouchEvent(event);
+        }
+
+    }
+
     private int getMaxHorizontal() {
-        return (Math.abs(getDrawable().getBounds().width() - screenW));
+        return (Math.abs(getDrawable().getBounds().width() - screenWitdh));
     }
 
     private int getMaxVertical() {
-        return (Math.abs(getDrawable().getBounds().height() - screenH));
+        return (Math.abs(getDrawable().getBounds().height() - screenHeight));
     }
 
     private SimpleOnGestureListener gestureListener = new SimpleOnGestureListener() {

@@ -7,14 +7,14 @@
 
     <com.example.joek.parallaxeffect.ScrollableImageView
         android:id="@+id/layerLevelOne"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/asset_one"
         custom:setPercentVelocity="10"/>
 
     <com.example.joek.parallaxeffect.ScrollableImageView
         android:id="@+id/layerLevelTwo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/asset_one"
         custom:setPercentVelocity="50"/>
