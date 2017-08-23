@@ -9,11 +9,14 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.widget.OverScroller;
 
+import java.util.ArrayList;
+
 
 public class ScrollableImageView extends android.support.v7.widget.AppCompatImageView {
 
     private GestureDetectorCompat gestureDetector;
     private OverScroller overScroller;
+    private ArrayList<ScrollableImageView> children;
 
     private final int screenW;
     private final int screenH;
@@ -36,6 +39,7 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
         screenW = dm.widthPixels;
         screenH = dm.heightPixels;
 
+        children = new ArrayList<>();
         gestureDetector = new GestureDetectorCompat(context, gestureListener);
         overScroller = new OverScroller(context);
     }
@@ -52,6 +56,11 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
 //        Log.i("CurrentY1", String.format(Locale.US, "%f", event.getY()));
 //        event.getY();
         gestureDetector.onTouchEvent(event);
+        if(children !=null){
+            for(ScrollableImageView child: this.children){
+                child.gestureDetector.onTouchEvent(event);
+            }
+        }
         return true;
     }
 
@@ -123,4 +132,10 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
         }
     };
 
+    public void setChildren(ScrollableImageView children) {
+        if(!this.children.contains(children)){
+            this.children.add(children);
+
+        }
+    }
 }

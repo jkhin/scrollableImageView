@@ -18,7 +18,7 @@ import android.widget.ProgressBar;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView layerLvl1, layerLvl2;
+    ScrollableImageView layerLvl1, layerLvl2;
     private static final String DEBUG_TAG = "Training";
 
     @Override
@@ -26,8 +26,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        layerLvl1 = (ImageView) findViewById(R.id.layerLevelOne);
-        layerLvl2 = (ImageView) findViewById(R.id.layerLevelTwo);
+        layerLvl1 = (ScrollableImageView) findViewById(R.id.layerLevelOne);
+        layerLvl2 = (ScrollableImageView) findViewById(R.id.layerLevelTwo);
+        layerLvl2.setChildren(layerLvl1);
         new BitmapLoaderTask().execute("asset_one.jpg", "asset_two.png");
 
     }
