@@ -48,6 +48,7 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
         if (attrs != null) {
             String packageName = "http://schemas.android.com/apk/res-auto";
             percentValue = attrs.getAttributeValue(packageName, "setPercentVelocity");
+
         }
     }
 

@@ -16,8 +16,16 @@
         android:id="@+id/layerLevelTwo"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@drawable/asset_one"
+        android:src="@drawable/asset_two"
         custom:setPercentVelocity="20"/>
+
+    <com.example.joek.parallaxeffect.ScrollableImageView
+        android:id="@+id/layerLevelThree"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/asset_three"
+        custom:setPercentVelocity="30"/>
+
 
     <ProgressBar
         android:id="@android:id/progress"
