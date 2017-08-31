@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         layerLvl1 = (ScrollableImageView) findViewById(R.id.layerLevelOne);
-//        layerLvl2 = (ScrollableImageView) findViewById(R.id.layerLevelTwo);
-//        layerLvl3 = (ScrollableImageView) findViewById(R.id.layerLevelThree);
-//        layerLvl3.setChildren(layerLvl2);
-//        layerLvl3.setChildren(layerLvl1);
+        layerLvl2 = (ScrollableImageView) findViewById(R.id.layerLevelTwo);
+        layerLvl3 = (ScrollableImageView) findViewById(R.id.layerLevelThree);
+        layerLvl3.setChildren(layerLvl2);
+        layerLvl3.setChildren(layerLvl1);
 //        new BitmapLoaderTask().execute("asset_one.png", "asset_two.png", "asset_three.png");
-        new BitmapLoaderTask().execute("asset_two", "asset_two", "asset_three");
+//        new BitmapLoaderTask().execute("asset_one", "asset_two", "asset_three");
 
 
     }
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 case MotionEvent.ACTION_MOVE:
 //                    layerLvl1.dispatchGenericMotionEvent()
                     layerLvl1.dispatchTouchEvent(event);
-//                    layerLvl2.dispatchTouchEvent(event);
+                    layerLvl2.dispatchTouchEvent(event);
                     break;
             }
         }
