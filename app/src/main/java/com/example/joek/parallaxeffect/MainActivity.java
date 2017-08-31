@@ -29,9 +29,23 @@ public class MainActivity extends AppCompatActivity {
         layerLvl1 = (ScrollableImageView) findViewById(R.id.layerLevelOne);
         layerLvl2 = (ScrollableImageView) findViewById(R.id.layerLevelTwo);
         layerLvl3 = (ScrollableImageView) findViewById(R.id.layerLevelThree);
+
+
+//        layerLvl1.setLayoutParams(new FrameLayout.LayoutParams(
+//                ViewGroup.LayoutParams.MATCH_PARENT,
+//                ViewGroup.LayoutParams.WRAP_CONTENT
+//        ));
+//        layerLvl2.setLayoutParams(new FrameLayout.LayoutParams(
+//                ViewGroup.LayoutParams.MATCH_PARENT,
+//                ViewGroup.LayoutParams.WRAP_CONTENT));
+//        layerLvl3.setLayoutParams(new FrameLayout.LayoutParams(
+//                ViewGroup.LayoutParams.MATCH_PARENT,
+//                ViewGroup.LayoutParams.WRAP_CONTENT));
+
+
         layerLvl3.setChildren(layerLvl2);
         layerLvl3.setChildren(layerLvl1);
-        new BitmapLoaderTask().execute("asset_one.png", "asset_two.png", "asset_three.png");
+//        new BitmapLoaderTask().execute("asset_one.png", "asset_two.png", "asset_three.png");
 
     }
 
@@ -52,7 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setImageBitmap(Bitmap bmp, ImageView iv) {
         iv.setImageBitmap(bmp);
-        iv.setLayoutParams(new FrameLayout.LayoutParams(bmp.getWidth(), bmp.getHeight()));
+
+//        iv.setLayoutParams(new FrameLayout.LayoutParams(
+//                bmp.getWidth(),
+//                bmp.getHeight()));
+        iv.setScaleType(ImageView.ScaleType.MATRIX);
     }
 
     private class BitmapLoaderTask extends AsyncTask<String, Void, Bitmap[]> {
@@ -62,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress = (ProgressBar) findViewById(android.R.id.progress);
+//            progress = (ProgressBar) findViewById(android.R.id.progress);
         }
 
         @Override
@@ -87,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Bitmap[] result) {
             super.onPostExecute(result);
-            progress.setVisibility(View.INVISIBLE);
+//            progress.setVisibility(View.INVISIBLE);
 
             setImageBitmap(result[0], layerLvl1);
             setImageBitmap(result[1], layerLvl2);
