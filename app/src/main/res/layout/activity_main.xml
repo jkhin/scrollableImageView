@@ -9,7 +9,7 @@
         android:id="@+id/layerLevelOne"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/asset_one_short"
+        android:src="@drawable/asset_one_short1"
         android:scaleType="matrix"
         android:visibility="visible"
         custom:setPercentVelocity="10"/>
@@ -21,7 +21,6 @@
         android:src="@drawable/asset_two_short"
         android:scaleType="matrix"
         android:visibility="visible"
-
         custom:setPercentVelocity="20"/>
 
     <com.example.joek.parallaxeffect.ScrollableImageView
@@ -31,7 +30,6 @@
         android:scaleType="matrix"
         android:src="@drawable/asset_three_short"
         android:visibility="visible"
-
         custom:setPercentVelocity="30"/>
 
 

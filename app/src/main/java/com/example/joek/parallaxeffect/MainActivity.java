@@ -42,9 +42,8 @@ public class MainActivity extends AppCompatActivity {
 //                ViewGroup.LayoutParams.MATCH_PARENT,
 //                ViewGroup.LayoutParams.WRAP_CONTENT));
 
-
-        layerLvl3.setChildren(layerLvl2);
         layerLvl3.setChildren(layerLvl1);
+        layerLvl3.setChildren(layerLvl2);
 //        new BitmapLoaderTask().execute("asset_one.png", "asset_two.png", "asset_three.png");
 
     }
