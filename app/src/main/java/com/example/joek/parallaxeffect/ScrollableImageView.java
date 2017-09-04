@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
+import android.widget.ImageView;
 import android.widget.OverScroller;
 
 import java.util.ArrayList;
@@ -53,8 +54,6 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        Log.i("CurrentY1", String.format(Locale.US, "%f", event.getY()));
-//        event.getY();
         gestureDetector.onTouchEvent(event);
         if(children !=null){
             for(ScrollableImageView child: this.children){
@@ -70,6 +69,7 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
         // computeScrollOffset() returns true only when the scrolling isn't
         // already finished
         if (overScroller.computeScrollOffset()) {
+            positionX = overScroller.getCurrX();
             positionY = overScroller.getCurrY();
             scrollTo(positionX, positionY);
         } else {
@@ -105,7 +105,7 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
                                float velocityY) {
             overScroller.forceFinished(true);
-            overScroller.fling(positionX, positionY, (int) -velocityX, -transformUnitScrollVel(velocityY, percent), 0, getMaxHorizontal(), 0,
+            overScroller.fling(positionX, positionY, (int) -velocityX, (int) -velocityY, 0, getMaxHorizontal(), 0,
                     getMaxVertical());
             ViewCompat.postInvalidateOnAnimation(ScrollableImageView.this);
             return true;
@@ -114,19 +114,23 @@ public class ScrollableImageView extends android.support.v7.widget.AppCompatImag
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2,
                                 float distanceX, float distanceY) {
-
             overScroller.forceFinished(true);
             // normalize scrolling distances to not overscroll the image
-            int dy = transformUnitScrollVel(distanceY, percent);
+            int dx = (int) distanceX;
+            int dy = (int) distanceY;
+            int newPositionX = positionX + dx;
             int newPositionY = positionY + dy;
-
+            if (newPositionX < 0) {
+                dx -= newPositionX;
+            } else if (newPositionX > getMaxHorizontal()) {
+                dx -= (newPositionX - getMaxHorizontal());
+            }
             if (newPositionY < 0) {
                 dy -= newPositionY;
             } else if (newPositionY > getMaxVertical()) {
                 dy -= (newPositionY - getMaxVertical());
             }
-
-            overScroller.startScroll(positionX, positionY, 0, dy, 0);
+            overScroller.startScroll(positionX, positionY, dx, dy, 0);
             ViewCompat.postInvalidateOnAnimation(ScrollableImageView.this);
             return true;
         }
